@@ -26,11 +26,13 @@ class ColHandler(logging.StreamHandler):
         self.stream.write(colorize(self.format(record), fg=fgc, bg=bgc, bold=bold) + "\n")
 
 
-def init_root_logger(format="%(asctime)s %(name)-15s %(levelname)-8s %(message)s", level=1):
+def init_root_logger(format="%(asctime)s %(name)-15s %(levelname)-8s %(message)s", level=1, handler_level=None):
     log = logging.getLogger()
     formatter = logging.Formatter(format)
     sh = ColHandler()
     sh.setFormatter(formatter)
+    if handler_level:
+        sh.setLevel(handler_level)
     log.setLevel(level)
     log.addHandler(sh)
 
